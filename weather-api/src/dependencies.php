@@ -3,6 +3,18 @@
 
 $container = $app->getContainer();
 
+
+// pdo
+$container['db'] = function ($c) {
+    $settings = $c->get('settings')['db'];
+    //var_dump($settings["pass"]); die;
+    $pdo = new PDO("mysql:host=" . $settings['host'] . ";port=8889;dbname=" . $settings['dbname'],
+        $settings['user'], $settings['pass']);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    return $pdo;
+};
+
 // view renderer
 $container['renderer'] = function ($c) {
     $settings = $c->get('settings')['renderer'];
