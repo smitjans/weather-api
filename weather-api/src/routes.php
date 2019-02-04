@@ -38,6 +38,21 @@ $app->get('/weather/[{id}]', function (Request $request, Response $response, arr
     return $response->withJson($data); //Prendo la lista di oggetti e la converto in un json che ritorno
 });
 
+$app->get('/weathercitta/[{id}]', function (Request $request, Response $response, array $args) {
+
+
+    $id = $args['id'];
+
+    
+
+    $query = $this->db->prepare("SELECT * FROM Weather INNER JOIN Citta ON Weather.id_citta = Citta.id WHERE id_citta=$id");
+    //$query->bindParam('id', $args['id']);
+    $query->execute();
+    $data =  $query->fetchAll(); //Ritorna una lista di oggetti
+
+    return $response->withJson($data); //Prendo la lista di oggetti e la converto in un json che ritorno
+});
+
 
 $app->post('/weather', function (Request $request, Response $response, array $args) {
 
